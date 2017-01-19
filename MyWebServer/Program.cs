@@ -1,17 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
+using System.Net;
+using System.Net.Sockets;
 
 namespace MyWebServer
 {
     class Program
     {
+        /// <summary>
+        /// Starts server, calls ClientHandle and starts the thread that produces temperature data.
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            Console.WriteLine("\nHit the any key to exit...");
-            Console.ReadKey();
+            PluginManager PluginManager = new PluginManager();
+            TcpListener listener = new TcpListener(IPAddress.Any, 8080);
+            listener.Start();
+
+            Sensor dataInput = new Sensor();
+            Thread myThread = new Thread(new ThreadStart(dataInput.generateData));
+            myThread.Start();
+
+            Console.WriteLine("Webserver started");
+
+            
+
+            ClientHandle.HandleClients(PluginManager, listener);         
         }
     }
 }
