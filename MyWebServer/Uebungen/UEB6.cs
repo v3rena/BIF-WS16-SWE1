@@ -15,47 +15,58 @@ namespace Uebungen
 
         public IPluginManager GetPluginManager()
         {
-            throw new NotImplementedException();
+            return new PluginManager();
         }
 
         public IRequest GetRequest(System.IO.Stream network)
         {
-            throw new NotImplementedException();
+            return new Request(network);
         }
 
         public string GetNaviUrl()
         {
-            throw new NotImplementedException();
+            return "/navi";
         }
 
         public IPlugin GetNavigationPlugin()
         {
-            throw new NotImplementedException();
+            return new NaviPlugin();
         }
 
         public IPlugin GetTemperaturePlugin()
         {
-            throw new NotImplementedException();
+            return new TemperaturePlugin();
         }
 
         public string GetTemperatureRestUrl(DateTime from, DateTime until)
         {
-            throw new NotImplementedException();
+            string url = "/temperature/rest/";
+            url += from.ToString();
+            url += "/";
+            url += until.ToString();
+
+            return url;
         }
 
         public string GetTemperatureUrl(DateTime from, DateTime until)
         {
-            throw new NotImplementedException();
+            string url = "/temperature/span/";
+            url += from.Year + "-" + from.Month + "-" + from.Day;
+            url += "/";
+            url += until.Year + "-" + until.Month + "-" + until.Day;
+            url += "/";
+
+            return url;
         }
 
         public IPlugin GetToLowerPlugin()
         {
-            throw new NotImplementedException();
+            return new LowerPlugin();
         }
 
         public string GetToLowerUrl()
         {
-            throw new NotImplementedException();
+            return "/tolower";
         }
     }
 }
